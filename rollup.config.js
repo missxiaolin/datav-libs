@@ -1,4 +1,6 @@
 import serve from 'rollup-plugin-serve'
+import babel from 'rollup-plugin-babel'
+// const resolve = require('rollup-plugin-node-resolve') 
 
 // rollup可以帮我们打包 es6的模块化语法
 export default {
@@ -10,10 +12,14 @@ export default {
         sourcemap: true
     },
     plugins: [
+        // resolve(),
         serve({
             openPage: './index.html',
             contentBase: '',
             port: 9002
         }),
+        babel({
+            exclude: 'node_modules/**'
+        })
     ]
 }

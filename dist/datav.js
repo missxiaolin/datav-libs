@@ -5,7 +5,6 @@
 }(this, (function () { 'use strict';
 
 	console.log(1);
-
 	var index = {};
 
 	return index;

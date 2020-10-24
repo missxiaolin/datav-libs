@@ -1,1 +1,1 @@
-{"version":3,"file":"datav.js","sources":["../src/index.js"],"sourcesContent":["console.log(1)\n\nexport default {}"],"names":[],"mappings":";;;;;;CAAA,OAAO,CAAC,GAAG,CAAC,CAAC,EAAC;AACd;AACA,aAAe;;;;;;;;"}
+{"version":3,"file":"datav.js","sources":["../src/index.js"],"sourcesContent":["\nconsole.log(1)\n\nexport default {}"],"names":["console","log"],"mappings":";;;;;;CACAA,OAAO,CAACC,GAAR,CAAY,CAAZ;AAEA,aAAe,EAAf;;;;;;;;"}
