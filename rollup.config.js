@@ -1,7 +1,6 @@
 import serve from 'rollup-plugin-serve'
 import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
-// const resolve = require('rollup-plugin-node-resolve') 
+import resolve from 'rollup-plugin-node-resolve' // 外部依赖打包到项目
 
 // rollup可以帮我们打包 es6的模块化语法
 export default {
