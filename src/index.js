@@ -1,4 +1,5 @@
+import title from './title'
 
-console.log(1)
+console.log(title)
 
 export default {}

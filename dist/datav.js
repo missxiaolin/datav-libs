@@ -1,13 +1,17 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.datav = factory());
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.datav = factory());
 }(this, (function () { 'use strict';
 
-	console.log(1);
-	var index = {};
+    var title = {
+      a: 1
+    };
 
-	return index;
+    console.log(title);
+    var index = {};
+
+    return index;
 
 })));
 //# sourceMappingURL=datav.js.map
