@@ -1,6 +1,7 @@
 import serve from 'rollup-plugin-serve'
 import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve' // 外部依赖打包到项目
+import commitjs from 'rollup-plugin-commonjs'
 
 // rollup可以帮我们打包 es6的模块化语法
 export default {
@@ -13,6 +14,7 @@ export default {
     },
     plugins: [
         resolve(),
+        commitjs(),
         serve({
             openPage: './index.html',
             contentBase: '',
@@ -21,5 +23,7 @@ export default {
         babel({
             exclude: 'node_modules/**'
         })
-    ]
+    ],
+    // 那些模块是外部变量，可以不打包的js中，减小体积
+    external: []
 }
