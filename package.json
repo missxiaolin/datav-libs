@@ -25,13 +25,15 @@
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@types/jest": "^26.0.9",
+    "babel-plugin-root-import": "^6.5.0",
     "css.escape": "^1.5.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.23.0",
-    "rollup-plugin-serve": "^1.0.3",
-    "babel-plugin-root-import": "^6.5.0",
-    "rollup-plugin-babel": "^4.4.0"
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-serve": "^1.0.3"
   },
   "dependencies": {
+    "sam-test-data": "^0.0.5"
   }
 }

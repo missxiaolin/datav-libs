@@ -8,7 +8,16 @@
       a: 1
     };
 
-    console.log(title);
+    function random(base) {
+      if (base && base % 1 === 0) {
+        return Math.floor(Math.random() * base);
+      } else {
+        return 0;
+      }
+    }
+
+    console.log(title, random);
+    console.log(random());
     var index = {};
 
     return index;
