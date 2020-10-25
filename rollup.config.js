@@ -16,7 +16,7 @@ export default {
         name: 'datav',
         sourcemap: true,
         globals: {
-            vue: 'vue'
+            vue: 'Vue'
         }
     },
     plugins: [
@@ -35,7 +35,7 @@ export default {
         css({
             plugins: []
         }),
-        terser(),
+        // terser(),
     ],
     // 那些模块是外部变量，可以不打包的js中，减小体积
     external: []
