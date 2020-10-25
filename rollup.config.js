@@ -3,7 +3,9 @@ import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve' // 外部依赖打包到项目
 import commitjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
-import { terser } from 'rollup-plugin-terser'
+import { terser } from 'rollup-plugin-terser' // 混淆js
+import vue from 'rollup-plugin-vue'
+import css from 'rollup-plugin-postcss'
 
 // rollup可以帮我们打包 es6的模块化语法
 export default {
@@ -12,7 +14,10 @@ export default {
         file: './dist/datav.js',
         format: 'umd',
         name: 'datav',
-        sourcemap: true
+        sourcemap: true,
+        globals: {
+            vue: 'vue'
+        }
     },
     plugins: [
         resolve(),
@@ -26,7 +31,11 @@ export default {
             exclude: 'node_modules/**'
         }),
         json(),
-        terser()
+        vue(),
+        css({
+            plugins: []
+        }),
+        terser(),
     ],
     // 那些模块是外部变量，可以不打包的js中，减小体积
     external: []
