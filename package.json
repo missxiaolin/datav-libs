@@ -2,12 +2,19 @@
   "name": "datav-libs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/datav.js",
   "scripts": {
     "build": "rimraf lib && rollup -c -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "rollup -c -w"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "datav"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/missxiaolin/datav-libs.git"
