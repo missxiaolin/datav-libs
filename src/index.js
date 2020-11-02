@@ -1,6 +1,5 @@
-import title from './title'
-import Test from './test.vue'
-console.log(title)
+import Test from './components/Test/index'
+
 export default function(Vue) {
- Vue.component(Test.name, Test)
+    Vue.use(Test)
 }
