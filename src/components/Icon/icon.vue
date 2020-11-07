@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'Icon',
+    name: 'IconComponent',
     props: {
         name: String,
         style: Object
