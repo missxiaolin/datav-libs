@@ -14,14 +14,14 @@ export default {
         file: './dist/datav.js',
         format: 'umd',
         name: 'datav',
-        sourcemap: true,
+        // sourcemap: true,
         globals: {
             vue: 'Vue'
         }
     },
     plugins: [
-        resolve(),
-        commitjs(),
+        // resolve(),
+        // commitjs(),
         serve({
             openPage: './index.html',
             contentBase: '',
@@ -30,7 +30,7 @@ export default {
         babel({
             exclude: 'node_modules/**'
         }),
-        json(),
+        // json(),
         vue(),
         css({
             plugins: []
