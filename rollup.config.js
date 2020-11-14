@@ -20,7 +20,7 @@ export default {
         }
     },
     plugins: [
-        // resolve(),
+        resolve(),
         // commitjs(),
         serve({
             openPage: './index.html',
