@@ -10,7 +10,22 @@
             stroke="#3be6cb"
             stroke-dasharray="34"
             stroke-linecap="round"
-            ></circle>
+            >
+                <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="1.5s"
+                repeatCount="indefinite"
+                ></animateTransform>
+                <animate
+                    attributeName="stroke"
+                    values="#3be6cb;#02bcfe;#3be6cb"
+                    dur="4s"
+                    repeatCount="indefinite"
+                ></animate>
+            </circle>
             <circle 
             cx="25"
             cy="25"
@@ -20,7 +35,22 @@
             stroke="#02bcfe"
             stroke-dasharray="19"
             stroke-linecap="round"
-            ></circle>
+            >
+                <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="360 25 25"
+                to="0 25 25"
+                dur="1.5s"
+                repeatCount="indefinite"
+                ></animateTransform>
+                <animate
+                    attributeName="stroke"
+                    values="#02bcfe;#3be6cb;#02bcfe"
+                    dur="4s"
+                    repeatCount="indefinite"
+                ></animate>
+            </circle>
         </svg>
     </div>
 </template>
