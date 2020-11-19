@@ -15,9 +15,9 @@
           <stop offset="100%" stop-color="#fff" stop-opacity="0"></stop>
         </radialGradient>
         <mask id="fly-box-mask">
-          <circle r="150" cx="0" cy="0" fill="url(#radial-gradient)">
+          <circle :r="startLength" cx="0" cy="0" fill="url(#radial-gradient)">
             <animateMotion
-              dur="3s"
+              :dur="`${duration}s`"
               :path="path"
               rotate="auto"
               repeatCount="indefinite"
@@ -28,13 +28,13 @@
       <use
         href="#fly-box-path"
         stroke-width="1"
-        stroke="#235fa7"
+        :stroke="lineColor"
         fill="none"
       ></use>
       <use
         href="#fly-box-path"
         stroke-width="3"
-        stroke="#4fd2dd"
+        :stroke="startColor"
         fill="none"
         mask="url(#fly-box-mask)"
       ></use>
@@ -50,6 +50,24 @@ import { computed, ref, onMounted, getCurrentInstance } from "vue";
 
 export default {
   name: "FlyBox",
+  props: {
+    lineColor: {
+      type: String,
+      default: '#235fa7'
+    },
+    startColor: {
+      type: String,
+      default: '#4fd2dd'
+    },
+    startLength: {
+      type: [String, Number],
+      default: 150
+    },
+    duration: {
+      type: [String, Number],
+      default: 3
+    }
+  },
   setup(ctx) {
     const width = ref(0);
     const height = ref(0);
@@ -95,6 +113,7 @@ export default {
   .fly-box-content {
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
   }
 }
 </style>
