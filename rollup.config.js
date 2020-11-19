@@ -7,6 +7,8 @@ import { terser } from 'rollup-plugin-terser' // 混淆js
 import vue from 'rollup-plugin-vue'
 import css from 'rollup-plugin-postcss'
 
+import nodePolyFills from 'rollup-plugin-node-polyfills'
+
 // rollup可以帮我们打包 es6的模块化语法
 export default {
     input: './src/index.js',
@@ -16,12 +18,15 @@ export default {
         name: 'datav',
         // sourcemap: true,
         globals: {
-            vue: 'Vue'
+            vue: 'Vue',
         }
     },
     plugins: [
-        resolve(),
-        // commitjs(),
+        // nodePolyFills(),
+        resolve({
+            // preferBuiltins: false,  // Default: true
+        }),
+        commitjs(),
         serve({
             openPage: './index.html',
             contentBase: '',
@@ -30,7 +35,7 @@ export default {
         babel({
             exclude: 'node_modules/**'
         }),
-        // json(),
+        json(),
         vue(),
         css({
             plugins: []
