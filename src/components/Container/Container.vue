@@ -1,6 +1,6 @@
 <template>
-    <div>
-        sss
+    <div class="container">
+        <slot></slot>
     </div>
 </template>
 
@@ -12,4 +12,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
