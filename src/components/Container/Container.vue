@@ -6,7 +6,8 @@
 
 
 <script>
-import { ref, getCurrentInstance, onMounted, onUnmounted } from "vue";
+import { ref, getCurrentInstance, onMounted, onUnmounted, nextTick } from "vue";
+import { debounce } from "../../utils/index";
 
 export default {
   name: "container",
@@ -23,20 +24,25 @@ export default {
     let dom;
 
     const initSize = () => {
-      dom = context.$refs[refName];
-      // 容器尺寸
-      if (!!ctx.options && !!ctx.options.width && !!ctx.options.height) {
-        width.value = ctx.options.width;
-        height.value = ctx.options.height;
-      } else {
-        width.value = dom.clientWidth;
-        height.value = dom.clientHeight;
-      }
-      // 获取画布尺寸
-      if (!originalWidth.value || !originalHeight.value) {
-        originalWidth.value = window.screen.width;
-        originalHeight.value = window.screen.height;
-      }
+      return new Promise((resolve) => {
+        nextTick(() => {
+          dom = context.$refs[refName];
+          // 容器尺寸
+          if (!!ctx.options && !!ctx.options.width && !!ctx.options.height) {
+            width.value = ctx.options.width;
+            height.value = ctx.options.height;
+          } else {
+            width.value = dom.clientWidth;
+            height.value = dom.clientHeight;
+          }
+          // 获取画布尺寸
+          if (!originalWidth.value || !originalHeight.value) {
+            originalWidth.value = window.screen.width;
+            originalHeight.value = window.screen.height;
+          }
+          resolve();
+        });
+      });
     };
 
     const updateSize = () => {
@@ -61,24 +67,22 @@ export default {
       dom.style.transform = `scale(${widthScale}, ${heightScale})`;
     };
 
-    onMounted(() => {
+    onMounted(async () => {
       context = getCurrentInstance().ctx;
-      initSize();
+      await initSize();
       updateSize();
       updateScale();
-      const onResize = () => {
-        initSize();
+      const onResize = async () => {
+        await initSize();
         updateScale();
       };
-      window.addEventListener("resize", onResize);
+      window.addEventListener("resize", debounce(100, onResize));
     });
 
     // 当组件销毁执行
     onUnmounted(() => {
-        window.removeEventListener('resize', onResize)
-    })
-
-
+      window.removeEventListener("resize", onResize);
+    });
 
     return {
       refName,
