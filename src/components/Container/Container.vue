@@ -50,16 +50,16 @@ export default {
     };
 
     const updateScale = () => {
-        // 获取真实的视口尺寸
-        const currentWidth = document.body.clientWidth
-        const currentHeight = document.body.clientHeight
-        // 最终宽高
-        const realWidth = width.value || originalWidth.value
-        const realHeight = height.value || originalHeight.value
-        const widthScale = currentWidth / realWidth
-        const heightScale = currentHeight / realHeight
-        dom.style.transform = `scale(${widthScale}, ${heightScale})`
-    }
+      // 获取真实的视口尺寸
+      const currentWidth = document.body.clientWidth;
+      const currentHeight = document.body.clientHeight;
+      // 最终宽高
+      const realWidth = width.value || originalWidth.value;
+      const realHeight = height.value || originalHeight.value;
+      const widthScale = currentWidth / realWidth;
+      const heightScale = currentHeight / realHeight;
+      dom.style.transform = `scale(${widthScale}, ${heightScale})`;
+    };
 
     onMounted(() => {
       context = getCurrentInstance().ctx;
@@ -79,11 +79,11 @@ export default {
 
 <style lang="scss" scoped>
 #containerBox {
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    transform-origin: left top;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  transform-origin: left top;
+  z-index: 999;
 }
 </style>
