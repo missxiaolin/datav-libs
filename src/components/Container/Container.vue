@@ -6,7 +6,7 @@
 
 
 <script>
-import { ref, getCurrentInstance, onMounted } from "vue";
+import { ref, getCurrentInstance, onMounted, onUnmounted } from "vue";
 
 export default {
   name: "container",
@@ -22,7 +22,7 @@ export default {
     let context;
     let dom;
 
-    const init = () => {
+    const initSize = () => {
       dom = context.$refs[refName];
       // 容器尺寸
       if (!!ctx.options && !!ctx.options.width && !!ctx.options.height) {
@@ -63,10 +63,22 @@ export default {
 
     onMounted(() => {
       context = getCurrentInstance().ctx;
-      init();
+      initSize();
       updateSize();
       updateScale();
+      const onResize = () => {
+        initSize();
+        updateScale();
+      };
+      window.addEventListener("resize", onResize);
     });
+
+    // 当组件销毁执行
+    onUnmounted(() => {
+        window.removeEventListener('resize', onResize)
+    })
+
+
 
     return {
       refName,
