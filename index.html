@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@3.0.0/dist/vue.global.js"></script>
     <script src="./dist/datav.js"></script>
 </head>
+
 <body>
     <div id="app" style="width: 600px; height: 500px;">
-        <container>
-            <div>sss</div>
+        <container :options="{width: 3840, height: 2160}">
+            <div class="test">sss</div>
         </container>
     </div>
     <script>
@@ -24,4 +26,19 @@
         }).use(window.datav).mount('#app')
     </script>
 </body>
+
 </html>
+
+<style>
+    html, body, #app {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .test {
+        color: red;
+        font-size: 14px;
+        transform: scale(1, 1);
+    }
+</style>
