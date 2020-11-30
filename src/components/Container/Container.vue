@@ -26,7 +26,6 @@ export default {
     let context;
     let dom;
     let observer;
-    let onResize;
 
     const initSize = () => {
       return new Promise((resolve) => {
@@ -72,6 +71,12 @@ export default {
       dom.style.transform = `scale(${widthScale}, ${heightScale})`;
     };
 
+    const onResize = async (e) => {
+      console.log(e);
+      await initSize();
+      updateScale();
+    };
+
     const initMutationObserver = () => {
       const MutationObserver = window.MutationObserver;
       observer = new MutationObserver(onResize);
@@ -96,11 +101,6 @@ export default {
       await initSize();
       updateSize();
       updateScale();
-      onResize = async (e) => {
-        console.log(e);
-        await initSize();
-        updateScale();
-      };
       window.addEventListener("resize", debounce(100, onResize));
       initMutationObserver();
       ready.value = true;
