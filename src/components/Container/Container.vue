@@ -1,6 +1,8 @@
 <template>
   <div id="containerBox" :ref="refName">
-    <slot></slot>
+    <template v-if="ready">
+      <slot></slot>
+    </template>
   </div>
 </template>
 
@@ -20,8 +22,11 @@ export default {
     const height = ref(0);
     const originalWidth = ref(0);
     const originalHeight = ref(0);
+    const ready = ref(false);
     let context;
     let dom;
+    let observer;
+    let onResize;
 
     const initSize = () => {
       return new Promise((resolve) => {
@@ -67,27 +72,51 @@ export default {
       dom.style.transform = `scale(${widthScale}, ${heightScale})`;
     };
 
+    const initMutationObserver = () => {
+      const MutationObserver = window.MutationObserver;
+      observer = new MutationObserver(onResize);
+      observer.observe(dom, {
+        attributes: true,
+        attributeFilter: ["style"],
+        attributeOldValue: true,
+      });
+    };
+
+    const removeMutationObserver = () => {
+      if (observer) {
+        observer.disconnect();
+        observer.takeRecords();
+        observer = null;
+      }
+    };
+
     onMounted(async () => {
+      ready.value = false;
       context = getCurrentInstance().ctx;
       await initSize();
       updateSize();
       updateScale();
-      const onResize = async () => {
+      onResize = async (e) => {
+        console.log(e);
         await initSize();
         updateScale();
       };
       window.addEventListener("resize", debounce(100, onResize));
+      initMutationObserver();
+      ready.value = true;
     });
 
     // 当组件销毁执行
     onUnmounted(() => {
       window.removeEventListener("resize", onResize);
+      removeMutationObserver();
     });
 
     return {
       refName,
       width,
       height,
+      ready,
     };
   },
 };
