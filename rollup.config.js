@@ -33,7 +33,13 @@ export default {
             port: 9002
         }),
         babel({
-            exclude: 'node_modules/**'
+            exclude: 'node_modules/**',
+            runtimeHelpers: true,
+            plugins: [
+                ['@babel/plugin-transform-runtime', {
+                    regenerator: true
+                }]
+            ]
         }),
         json(),
         vue(),
