@@ -13,12 +13,39 @@
     <div id="app">
         <Loading v-if="!isLoading">数据大屏加载中……</Loading>
         <container v-if="isLoading" :options="{width: 3840, height: 2160}">
+            <div class="header">111</div>
+            <div class="separator">222</div>
+            <div class="center">
+                <div class="left">
+                    <div class="left1">1</div>
+                    <div class="left2">2</div>
+                    <div class="left3">3</div>
+                    <div class="left4">4</div>
+                    <div class="left5">5</div>
+                    <div class="left6">6</div>
+                </div>
+                <div class="right">
+                    <div class="right-top1">999</div>
+                    <div class="right-top2">000</div>
+                    <div class="right-bottom">
+                        <div class="right-left">
+                            <div class="right-left1">999</div>
+                            <div class="right-left2">999</div>
+                            <div class="right-left3">999</div>
+                        </div>
+                        <div class="right-right">
+                            <div class="right-right1">4444</div>
+                            <div class="right-right1">4444</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </container>
     </div>
     <script>
         Vue.createApp({
             setup() {
-                let isLoading = false
+                let isLoading = true
                 return {
                     isLoading
                 }
@@ -39,10 +66,34 @@
     #app {
         position: relative;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         background: rgba(29, 29, 29);
-        font-size: 14px;
+        font-size: 20px;
         color: #ffffff;
+    }
+    #containerBox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100% ;
+    }
+    .header {
+        width: 100%;
+        height: 167px;
+        background: yellow;
+    }
+    .separator {
+        width: 100%;
+        height: 10px;
+        background: #000000;
+    }
+    .center {
+        width: 100%;
+        flex: 1;
+        background: rebeccapurple;
     }
 </style>

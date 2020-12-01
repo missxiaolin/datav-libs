@@ -61,8 +61,8 @@ export default {
 
     const updateScale = () => {
       // 获取真实的视口尺寸
-      const currentWidth = document.body.clientWidth;
-      const currentHeight = document.body.clientHeight;
+      const currentWidth = document.documentElement.clientWidth;
+      const currentHeight = document.documentElement.clientHeight;
       // 最终宽高
       const realWidth = width.value || originalWidth.value;
       const realHeight = height.value || originalHeight.value;
