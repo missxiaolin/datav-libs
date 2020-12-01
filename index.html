@@ -10,17 +10,17 @@
 </head>
 
 <body>
-    <div id="app" style="width: 600px; height: 500px;">
-        <container :options="{width: 3840, height: 2160}">
-            <div class="test">sss</div>
+    <div id="app">
+        <Loading v-if="!isLoading">数据大屏加载中……</Loading>
+        <container v-if="isLoading" :options="{width: 3840, height: 2160}">
         </container>
     </div>
     <script>
         Vue.createApp({
             setup() {
-                var message = 'hello'
+                let isLoading = false
                 return {
-                    message
+                    isLoading
                 }
             }
         }).use(window.datav).mount('#app')
@@ -36,9 +36,13 @@
         margin: 0;
         padding: 0;
     }
-    .test {
-        color: red;
-        font-size: 200px;
-        transform: scale(1, 1);
+    #app {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(29, 29, 29);
+        font-size: 14px;
+        color: #ffffff;
     }
 </style>
