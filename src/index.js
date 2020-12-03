@@ -4,6 +4,9 @@ import SvgAnimation from './components/SvgAnimation/index'
 import Loading from './components/Loading/index'
 import FlyBox from './components/FlyBox/index'
 import Container from './components/Container/index'
+import TopHeader from './components/TopHeader/index'
+
+
 
 export default function(Vue) {
     Vue.use(Svg)
@@ -12,4 +15,5 @@ export default function(Vue) {
     Vue.use(Loading)
     Vue.use(FlyBox)
     Vue.use(Container)
+    Vue.use(TopHeader)
 }
