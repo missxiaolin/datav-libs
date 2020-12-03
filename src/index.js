@@ -6,6 +6,7 @@ import FlyBox from './components/FlyBox/index'
 import Container from './components/Container/index'
 import TopHeader from './components/TopHeader/index'
 import Logo from './components/Logo/index'
+import TodayUsers from './components/TodayUsers/index'
 
 
 
@@ -18,4 +19,5 @@ export default function(Vue) {
     Vue.use(Container)
     Vue.use(TopHeader)
     Vue.use(Logo)
+    Vue.use(TodayUsers)
 }
