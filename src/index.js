@@ -7,7 +7,7 @@ import Container from './components/Container/index'
 import TopHeader from './components/TopHeader/index'
 import Logo from './components/Logo/index'
 import TodayUsers from './components/TodayUsers/index'
-
+import VueCountTo from './components/VueCountTo/index'
 
 
 export default function(Vue) {
@@ -20,4 +20,5 @@ export default function(Vue) {
     Vue.use(TopHeader)
     Vue.use(Logo)
     Vue.use(TodayUsers)
+    Vue.use(VueCountTo)
 }

@@ -3,7 +3,8 @@
     <div class="title">用户总数</div>
     <div class="sub-title">user total count</div>
     <div class="total">
-      {{todayUser}}
+      <vue-count-to :startVal='0' :endVal='2017' :duration='4000'></vue-count-to>
+      <!-- {{todayUser}} -->
     </div>
     <div class="percent-text">
       <span class="percent-text-1"> 每日增长率:{{growthLastDay}} </span>
@@ -14,8 +15,10 @@
 
 <script>
 import { ref } from "vue";
+// import vueCountTo from '../VueCountTo/VueCountTo';
 
 export default {
+  // components: { vueCountTo },
   name: "totalUser",
   props: {
     todayUser: {
