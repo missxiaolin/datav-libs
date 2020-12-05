@@ -3,22 +3,42 @@
     <div class="title">用户总数</div>
     <div class="sub-title">user total count</div>
     <div class="total">
-      <vue-count-to :startVal='0' :endVal='2017' :duration='4000'></vue-count-to>
+      <vue-count-to
+        :startVal="startVal"
+        :endVal="todayUser"
+        :duration="1000"
+      ></vue-count-to>
       <!-- {{todayUser}} -->
     </div>
     <div class="percent-text">
-      <span class="percent-text-1"> 每日增长率:{{growthLastDay}} </span>
-      <span class="percent-text-2"> 每月增长率:{{growthLastMonth}} </span>
+      <span class="percent-text-1">
+        每日增长率:
+        <vue-count-to
+          :startVal="startPercent"
+          :endVal="growthLastDay"
+          :duration="1000"
+          :decimals="2"
+          suffix="%"
+        ></vue-count-to>
+      </span>
+      <span class="percent-text-2">
+        每月增长率:
+        <vue-count-to
+          :startVal="startPercent2"
+          :endVal="growthLastMonth"
+          :duration="1000"
+          :decimals="2"
+          suffix="%"
+        ></vue-count-to>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
-// import vueCountTo from '../VueCountTo/VueCountTo';
+import { ref, watch } from "vue";
 
 export default {
-  // components: { vueCountTo },
   name: "totalUser",
   props: {
     todayUser: {
@@ -38,18 +58,28 @@ export default {
     const startVal = ref(0);
     const startPercent = ref(0);
     const startPercent2 = ref(0);
-    const updateStartVal = () => {
-      console.log(props)
-      startVal.value = props.todayUser;
-      startPercent.value = props.growthLastDay;
-      startPercent2.value = props.growthLastMonth;
-    };
-    updateStartVal()
+    watch(
+      () => props.todayUser,
+      (nextValue, prevValue) => {
+        startVal.value = prevValue;
+      }
+    );
+    watch(
+      () => props.growthLastDay,
+      (nextValue, prevValue) => {
+        startPercent.value = prevValue;
+      }
+    );
+    watch(
+      () => props.growthLastMonth,
+      (nextValue, prevValue) => {
+        startPercent2.value = prevValue;
+      }
+    );
     return {
       startVal,
       startPercent,
       startPercent2,
-      updateStartVal,
     };
   },
 };
@@ -57,34 +87,34 @@ export default {
 
 <style lang="scss" scoped>
 .total-user {
-    width: 100%;
-    height: 100%;
-    background: rgb(66, 68, 70);
-    box-shadow: 0 10px 10px rgba(0, 0, 0, .3);
-    padding: 20px 40px;
-    box-sizing: border-box;
-    .sub-title {
-        font-size: 16px;
-        letter-spacing: 1px;
-        margin-top: 10px;
+  width: 100%;
+  height: 100%;
+  background: rgb(66, 68, 70);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px 40px;
+  box-sizing: border-box;
+  .sub-title {
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+  }
+  .total {
+    font-family: DIN;
+    font-size: 68px;
+    font-weight: bolder;
+    letter-spacing: 2px;
+    padding: 10px 0;
+  }
+  .percent-text {
+    font-size: 28px;
+    font-family: DIN;
+    letter-spacing: 2px;
+    .percent-text-1 {
+      color: yellow;
     }
-    .total {
-        font-family: DIN;
-        font-size: 68px;
-        font-weight: bolder;
-        letter-spacing: 2px;
-        padding: 10px 0;
+    .percent-text-2 {
+      color: red;
     }
-    .percent-text {
-        font-size: 28px;
-        font-family: DIN;
-        letter-spacing: 2px;
-        .percent-text-1 {
-          color: yellow;
-        }
-        .percent-text-2 {
-          color: red;
-        }
-    }
+  }
 }
 </style>
