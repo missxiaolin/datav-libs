@@ -34,7 +34,10 @@
     </div>
     <div class="percent">
       <div class="percent-inner-wrapper">
-        <div class="percent-inner" :style="{width: `${growthLastDay}%`}"></div>
+        <div
+          class="percent-inner"
+          :style="{ width: `${growthLastDay}%` }"
+        ></div>
       </div>
     </div>
   </div>
