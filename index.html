@@ -14,8 +14,8 @@
         <!-- <Loading v-if="!isLoading">数据大屏加载中……</Loading> -->
         <container v-if="isLoading" :options="{width: 3840, height: 2160}">
             <div class="header">
-                <logo></logo>
-                <!-- <top-header><top-header/> -->
+                <!-- <logo></logo> -->
+                <top-header></top-header>
             </div>
             <div class="separator"></div>
             <div class="center">
@@ -83,6 +83,7 @@
                         color: 'rgb(251, 253, 142)'
                     }
                 ]
+                let averageAge = 1
                 setInterval(() => {
                     totalUser.totalUser = totalUser.totalUser + 1
                     totalUser = totalUser
@@ -90,6 +91,7 @@
                 let isLoading = true
                 return {
                     ageMockData,
+                    averageAge,
                     isLoading,
                     ...totalUser
                 }

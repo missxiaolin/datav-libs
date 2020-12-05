@@ -1,52 +1,57 @@
 <template>
   <div class="top-header">
-    <div class="title">数据大屏</div>
-    <!-- <div class="sub-title">移动报表</div> -->
-    <!-- <div class="date">{{date}}</div> -->
+    <div class="logo-wrapper">
+      <logo></logo>
+    </div>
+    <div class="logo-text">
+      <div class="cn-text">外卖业务数据大盘</div>
+      <div class="en-text">Delivery Overview of Business Data</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "TopHeader",
-  computed: {
-      date() {
-        const date = new Date()
-        const y = date.getFullYear()
-        let m = date.getMonth() + 1
-        let d = date.getDate()
-        m = m < 10 ? `0${m}` : m
-        d = d < 10 ? `0${d}` : d
-        return `${y}-${m}-${d}`
-      }
-    }
 };
 </script>
 
 <style lang="scss" scoped>
 .top-header {
-    position: absolute;
-    color: #fff;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    height: 300px;
-    padding: 50px 24px 24px;
-    box-sizing: border-box;
-    .title {
-      font-size: 48px;
-      font-weight: 500;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgb(36, 31, 32);
+  padding: 0 64px;
+  box-sizing: border-box;
+
+  .logo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .logo-wrapper {
+    width: 140px;
+    height: 140px;
+  }
+
+  .logo-text {
+    flex: 1;
+    margin-left: 40px;
+
+    .cn-text {
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      font-size: 60px;
+      letter-spacing: 2px;
     }
-    .sub-title {
-      font-size: 36px;
-      margin-top: 20px;
-    }
-    .date {
-      font-size: 24px;
-      font-weight: 300;
-      color: rgba(255,255,255,.5);
-      margin-top: 40px;
+
+    .en-text {
+      color: rgb(255, 255, 255);
+      font-size: 35px;
+      letter-spacing: 1px;
     }
   }
+}
 </style>
