@@ -8,8 +8,8 @@
       <div class="average-age-right">
         <div class="age">
           <vue-count-to
-            :start-val="0"
-            :end-val="100"
+            :startVal="startAge"
+            :endVal="avgAge"
             :duration="1000"
             :decimals="2"
           />
@@ -24,8 +24,8 @@
       <div class="average-data" v-for="(item, index) in data" :key="index">
         <div class="average-data-value">
           <vue-count-to
-            :start-val="item.startValue"
-            :end-val="item.value"
+            :startVal="item.startValue"
+            :endVal="item.value"
             :duration="1000"
           />
         </div>
@@ -38,15 +38,29 @@
   </div>
 </template>
 
-
 <script>
+import { ref, watch, onMounted } from "vue";
+
 export default {
-  name: "AverageAge",
+  name: "averageAge",
   props: {
-    data: {
-      type: Array,
-      default: [],
-    },
+    data: Array,
+    avgAge: Number,
+  },
+  setup(ctx) {
+    const startAge = ref(0);
+    const options = ref(null);
+    watch(
+      () => ctx.avgAge,
+      (nextValue, prevValue) => {
+        startAge.value = prevValue;
+      }
+    );
+
+    return {
+      startAge,
+      options,
+    };
   },
 };
 </script>
