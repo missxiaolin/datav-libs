@@ -32,6 +32,11 @@
         ></vue-count-to>
       </span>
     </div>
+    <div class="percent">
+      <div class="percent-inner-wrapper">
+        <div class="percent-inner" :style="{width: `${growthLastDay}%`}"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -114,6 +119,24 @@ export default {
     }
     .percent-text-2 {
       color: red;
+    }
+  }
+  .percent {
+    width: 100%;
+    height: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ffff;
+    margin-top: 10px;
+    .percent-inner-wrapper {
+      height: 100%;
+      padding: 2px;
+      box-sizing: border-box;
+      overflow: hidden;
+      .percent-inner {
+        height: 100%;
+        background: rgb(150, 150, 150);
+        transition: width 1s linear;
+      }
     }
   }
 }
