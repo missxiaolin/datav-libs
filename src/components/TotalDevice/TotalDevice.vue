@@ -45,7 +45,6 @@ export default {
     data: Object,
   },
   setup(props) {
-    let chart;
     const options = ref(null)
     const refData = ref([]);
     const num = ref(0);
