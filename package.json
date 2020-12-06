@@ -36,7 +36,7 @@
     "@vue/compiler-sfc": "^3.0.2",
     "babel-plugin-root-import": "^6.5.0",
     "css.escape": "^1.5.1",
-    "eslint": "^7.12.1",
+    "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.1.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.23.0",
