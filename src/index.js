@@ -11,6 +11,7 @@ import VueCountTo from './components/VueCountTo/index'
 import AverageAge from './components/AverageAge/index'
 import VueEcharts from './components/VueEcharts/index'
 import TotalDevice from './components/TotalDevice/index'
+import TotalGender from './components/TotalGender/index'
 
 
 export default function(Vue) {
@@ -27,4 +28,5 @@ export default function(Vue) {
     Vue.use(AverageAge)
     Vue.use(VueEcharts)
     Vue.use(TotalDevice)
+    Vue.use(TotalGender)
 }
