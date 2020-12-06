@@ -8,7 +8,11 @@
         <div class="title">男性用户人数</div>
         <div class="sub-title">Number of male users</div>
         <div class="age">
-          <vue-count-to :startVal="startMale" :endVal="endMale" :duration="1000" />
+          <vue-count-to
+            :startVal="startMale"
+            :endVal="endMale"
+            :duration="1000"
+          />
           <span class="age-unit">万人</span>
         </div>
       </div>
@@ -34,7 +38,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 export default {
   name: "totalGender",
@@ -46,13 +50,19 @@ export default {
     const endMale = ref(0);
     const startFemale = ref(0);
     const endFemale = ref(0);
+    const update = (newData) => {
+      startMale.value = endMale.value;
+      endMale.value = newData[0].value;
+      startFemale.value = endFemale.value;
+      endFemale.value = newData[1].value;
+    };
+    onMounted(() => {
+      update(props.data);
+    });
     watch(
       () => props.data,
       (newData) => {
-        startMale.value = endMale.value;
-        endMale.value = newData[0].value;
-        startFemale.value = endFemale.value;
-        endFemale.value = newData[1].value;
+        update(newData);
       }
     );
     return {
