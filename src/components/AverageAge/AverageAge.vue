@@ -42,7 +42,7 @@
 import { ref, watch, onMounted } from "vue";
 
 export default {
-  name: 'averageAge',
+  name: "averageAge",
   props: {
     data: Array,
     avgAge: Number,
@@ -50,12 +50,94 @@ export default {
   setup(ctx) {
     const startAge = ref(0);
     const options = ref(null);
+    const updateChart = () => {
+      const newData = ["指标"];
+      const colors = [];
+      const axis = ["指标"];
+      let max = 0;
+      ctx.data.forEach((item) => {
+        newData.push(item.value);
+        max += +item.value;
+        colors.push(item.color);
+        axis.push(item.axis);
+      });
+      options.value = {
+        tooltip: {
+          textStyle: {
+            fontSize: 28,
+          },
+          padding: 10,
+        },
+        colors,
+        grid: {
+          left: 40,
+          right: 40,
+          top: 0,
+        },
+        dataset: {
+          source: [axis, newData],
+        },
+        xAxis: {
+          type: "value",
+          max,
+          splitLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
+          axisLabel: {
+            color: "rgb(98, 105, 113)",
+            fontSize: 18,
+          },
+          axisLine: {
+            lineStyle: {
+              color: "rgb(50, 51, 53)",
+              width: 3,
+            },
+          },
+        },
+        yAxis: {
+          type: "category",
+          show: false,
+        },
+        series: [
+          {
+            type: "bar",
+            stack: "total",
+            barWidth: 15,
+          },
+          {
+            type: "bar",
+            stack: "total",
+          },
+          {
+            type: "bar",
+            stack: "total",
+          },
+          {
+            type: "bar",
+            stack: "total",
+          },
+        ],
+      };
+    };
+    watch(
+      () => ctx.data,
+      () => {
+        updateChart();
+      }
+    );
+    onMounted(() => {
+      updateChart();
+    });
     watch(
       () => ctx.avgAge,
       (nextValue, prevValue) => {
         startAge.value = prevValue;
       }
     );
+
     return {
       startAge,
       options,
@@ -104,6 +186,7 @@ export default {
   }
 
   #average-age-chart {
+    width: 100%;
     height: 120px;
   }
 

@@ -32,7 +32,6 @@ export default {
     watch(
       () => ctx.options,
       () => {
-          console.log(ctx.options)
         initChart();
       }
     );
@@ -44,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.echarts {
+.echarts-box {
   width: 100%;
   height: 100%;
 }
