@@ -1,7 +1,7 @@
 <template>
   <div class="total-device">
     <div class="total-device-left">
-      <div id="total-device-chart" />
+        <vue-echarts :options="options"></vue-echarts>
     </div>
     <div class="total-device-right">
       <div class="title-wrapper">
@@ -36,9 +36,7 @@
 </template>
 
 <script>
-import Echarts from "echarts";
 import { ref, watch, onMounted } from "vue";
-
 const color = ["rgb(176,207,120)", "rgb(157,195,91)", "rgb(131,167,72)"];
 
 export default {
@@ -48,6 +46,7 @@ export default {
   },
   setup(props) {
     let chart;
+    const options = ref(null)
     const refData = ref([]);
     const num = ref(0);
     const startNum = ref(0);
@@ -76,11 +75,7 @@ export default {
           ],
         };
       }
-
-      if (!chart) {
-        chart = Echarts.init(document.getElementById("total-device-chart"));
-      }
-      chart.setOption(createOption());
+      options.value = createOption()
     };
     const update = (newData) => {
       if (refData.value.length > 0) {
@@ -115,6 +110,7 @@ export default {
       refData,
       num,
       startNum,
+      options
     };
   },
 };
