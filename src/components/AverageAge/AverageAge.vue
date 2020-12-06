@@ -42,6 +42,7 @@
 import { ref, watch, onMounted } from "vue";
 
 export default {
+  name: 'averageAge',
   props: {
     data: Array,
     avgAge: Number,
@@ -49,92 +50,12 @@ export default {
   setup(ctx) {
     const startAge = ref(0);
     const options = ref(null);
-    const updateChart = () => {
-      const data = ["指标"];
-      const color = [];
-      const axis = ["指标"];
-      let max = 0;
-      // console.log(ctx.data)
-      ctx.data.forEach((item) => {
-        data.push(+item.value);
-        max += +item.value;
-        color.push(item.color);
-        axis.push(item.axis);
-      });
-      options.value = {
-        tooltip: {
-          textStyle: {
-            fontSize: 28,
-          },
-          padding: 10,
-        },
-        color,
-        grid: {
-          left: 40,
-          right: 40,
-          top: 0,
-        },
-        dataset: {
-          source: [axis, data],
-        },
-        xAxis: {
-          type: "value",
-          max,
-          splitLine: { show: false },
-          axisTick: { show: false },
-          axisLabel: {
-            color: "rgb(98,105,113)",
-            fontSize: 18,
-          },
-          axisLine: {
-            lineStyle: {
-              color: "rgb(50,51,53)",
-              width: 3,
-            },
-          },
-        },
-        yAxis: {
-          type: "category",
-          show: false,
-        },
-        series: [
-          {
-            type: "bar",
-            stack: "total",
-            barWidth: 15,
-          },
-          {
-            type: "bar",
-            stack: "total",
-          },
-          {
-            type: "bar",
-            stack: "total",
-          },
-          {
-            type: "bar",
-            stack: "total",
-          },
-        ],
-      };
-      // console.log(data, max, color, axis)
-    };
     watch(
       () => ctx.avgAge,
       (nextValue, prevValue) => {
         startAge.value = prevValue;
       }
     );
-    watch(
-      () => ctx.data,
-      () => {
-        updateChart();
-      }
-    );
-    onMounted(() => {
-      updateChart();
-    });
-
     return {
       startAge,
       options,
