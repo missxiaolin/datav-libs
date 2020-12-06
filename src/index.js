@@ -9,6 +9,7 @@ import Logo from './components/Logo/index'
 import TodayUsers from './components/TodayUsers/index'
 import VueCountTo from './components/VueCountTo/index'
 import AverageAge from './components/AverageAge/index'
+import VueEcharts from './components/VueEcharts/index'
 
 export default function(Vue) {
     Vue.use(Svg)
@@ -22,4 +23,5 @@ export default function(Vue) {
     Vue.use(TodayUsers)
     Vue.use(VueCountTo)
     Vue.use(AverageAge)
+    Vue.use(VueEcharts)
 }

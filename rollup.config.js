@@ -49,5 +49,5 @@ export default {
         terser(),
     ],
     // 那些模块是外部变量，可以不打包的js中，减小体积
-    external: []
+    external: ['vue', 'echarts']
 }
