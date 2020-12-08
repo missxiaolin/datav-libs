@@ -4,13 +4,14 @@
       <div class="title">外卖骑手概况</div>
       <div class="sub-title">Rider Growth rate</div>
     </div>
-    <div id="average-age-chart2" />
+    <div id="average-age-chart2">
+      <vue-echarts :options="options"></vue-echarts>
+    </div>
   </div>
 </template>
 
 <script>
-import Echarts from "echarts";
-import { watch, onMounted, onUnmounted } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 
 const colors = ["rgb(209,248,139)", "rgb(115,201,245)", "rgb(124,136,146)"];
 
@@ -20,9 +21,9 @@ export default {
     data: Object,
   },
   setup(props) {
-    let chart;
     let task;
     let currentChart = 0;
+    const options = ref(null);
 
     const update = () => {
       function createOption() {
@@ -132,11 +133,7 @@ export default {
           ],
         };
       }
-
-      if (!chart) {
-        chart = Echarts.init(document.getElementById("average-age-chart2"));
-      }
-      chart.setOption(createOption());
+      options.value = createOption();
       if (currentChart === 0) {
         currentChart = 1;
       } else {
@@ -157,6 +154,10 @@ export default {
       update();
     });
     onUnmounted(() => task && clearInterval(task));
+
+    return {
+      options,
+    };
   },
 };
 </script>
