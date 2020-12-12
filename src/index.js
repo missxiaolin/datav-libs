@@ -13,6 +13,7 @@ import VueEcharts from './components/VueEcharts/index'
 import TotalDevice from './components/TotalDevice/index'
 import TotalGender from './components/TotalGender/index'
 import TotalRider from './components/TotalRider/index'
+import HotCategory from './components/HotCategory/index'
 
 
 export default function(Vue) {
@@ -31,4 +32,5 @@ export default function(Vue) {
     Vue.use(TotalDevice)
     Vue.use(TotalGender)
     Vue.use(TotalRider)
+    Vue.use(HotCategory)
 }
