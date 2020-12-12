@@ -9,13 +9,15 @@
         <div class="sub-title">最后更新时间：{{date}} {{time}}</div>
       </div>
     </div>
-    <div id="average-age-chart3" />
+    <div id="average-age-chart3">
+      <vue-echarts :options="options"></vue-echarts>
+    </div>
   </div>
 </template>
 
 <script>
   import Echarts from 'echarts'
-  import { watch, onMounted } from 'vue'
+  import { ref, watch, onMounted } from 'vue'
   import { clock as useClock } from '../../utils/useClock'
 
   export default {
@@ -25,7 +27,7 @@
     },
     setup(props) {
       const { time, date } = useClock()
-      let chart
+      const options = ref(null)
       let currentChart = 0
       const update = () => {
         function createOption() {
@@ -108,10 +110,7 @@
             ]
           }
         }
-        if (!chart) {
-          chart = Echarts.init(document.getElementById('average-age-chart3'))
-        }
-        chart.setOption(createOption())
+        options.value = createOption()
         currentChart === 0 ? currentChart = 1 : currentChart = 0
       }
       watch(() => props.data, () => {
@@ -122,7 +121,8 @@
       })
       return {
         time,
-        date
+        date,
+        options
       }
     }
   }
