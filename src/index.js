@@ -14,6 +14,7 @@ import TotalDevice from './components/TotalDevice/index'
 import TotalGender from './components/TotalGender/index'
 import TotalRider from './components/TotalRider/index'
 import HotCategory from './components/HotCategory/index'
+import CenterHeader from './components/CenterHeader/index'
 
 
 export default function(Vue) {
@@ -33,4 +34,5 @@ export default function(Vue) {
     Vue.use(TotalGender)
     Vue.use(TotalRider)
     Vue.use(HotCategory)
+    Vue.use(CenterHeader)
 }
