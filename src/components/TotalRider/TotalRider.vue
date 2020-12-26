@@ -1,7 +1,7 @@
 <template>
   <div class="line-chart">
     <div class="title-wrapper">
-      <div class="title">外卖骑手概况</div>
+      <div class="title">骑手概况</div>
       <div class="sub-title">Rider Growth rate</div>
     </div>
     <div id="average-age-chart2">

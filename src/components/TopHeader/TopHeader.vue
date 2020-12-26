@@ -4,7 +4,7 @@
       <logo></logo>
     </div>
     <div class="logo-text">
-      <div class="cn-text">外卖业务数据大盘</div>
+      <div class="cn-text">业务数据大盘</div>
       <div class="en-text">Delivery Overview of Business Data</div>
     </div>
   </div>

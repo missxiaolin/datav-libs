@@ -6,7 +6,7 @@
     <div class="total-device-right">
       <div class="title-wrapper">
         <div class="total-device-right-left">
-          <div class="title">外卖登录设备</div>
+          <div class="title">登录设备</div>
           <div class="sub-title">Distribution of Internet devices</div>
         </div>
         <div class="total-device-right-right">

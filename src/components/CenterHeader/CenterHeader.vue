@@ -54,8 +54,8 @@ export default {
     const project = ref([]);
     const headerData = ref([]);
     const update = () => {
-      project.value = [...props.data.project.value];
-      headerData.value = [...props.data.headerData.value];
+      project.value = [...props.data.project.value] || [];
+      headerData.value = [...props.data.headerData.value] || [];
     };
     onMounted(() => {
       update();
