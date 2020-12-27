@@ -19,7 +19,7 @@
           <div class="title">{{ item.title }}</div>
           <div class="sub-title">{{ item.subTitle }}</div>
           <div class="total">
-            <count-to
+            <vue-count-to
               :start-val="item.startVal"
               :end-val="item.endVal"
               :duration="1000"
