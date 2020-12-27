@@ -15,6 +15,9 @@ import TotalGender from './components/TotalGender/index'
 import TotalRider from './components/TotalRider/index'
 import HotCategory from './components/HotCategory/index'
 import CenterHeader from './components/CenterHeader/index'
+import TransformCategory from './components/TransformCategory/index'
+
+
 
 
 export default function(Vue) {
@@ -35,4 +38,5 @@ export default function(Vue) {
     Vue.use(TotalRider)
     Vue.use(HotCategory)
     Vue.use(CenterHeader)
+    Vue.use(TransformCategory)
 }
