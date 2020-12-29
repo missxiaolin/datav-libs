@@ -2,11 +2,14 @@
   <div class="base-scroll-list" :id="uuid">
     <div
       class="base-scroll-list-header"
-      :style="{ backgroundColor: headerBg, height: `${headerHeight}px` }"
+      :style="{
+        backgroundColor: actualConfig.headerBg,
+        height: `${actualConfig.headerHeight}px`,
+      }"
     >
       <div
         class="header-item base-scroll-list-text"
-        v-for="(headerItem, i) in header"
+        v-for="(headerItem, i) in headerData"
         :key="i"
         :style="headerStyle[i]"
         v-html="headerItem"
@@ -17,51 +20,66 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { generateUUID } from "../../utils/index";
 import useScreen from "../../hooks/useScreen";
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from "lodash/cloneDeep";
+import assign from "lodash/assign";
 
 export default {
   name: "BaseScrollList",
   props: {
-    // 标题数据 [a, b, c]
-    header: Array,
-    // 标题样式  [{}, {}, {}]
-    headerStyle: Array,
-    // 标题背景色
-    headerBg: {
-      type: String,
-      default: "rgb(90, 90, 90)",
-    },
-    // 标题高度
-    headerHeight: {
-      type: [String, Number],
-      default: 35,
-    },
-    // 标题是否展示序号
-    headerIndex: {
-      type: Boolean,
-      default: false,
+    config: {
+      type: Object,
+      default: () => ({}),
     },
   },
   setup(props) {
+    const defaultConfig = {
+      // 标题数据 [a, b, c]
+      headerData: [],
+      // 标题样式  [{}, {}, {}]
+      headerStyle: [],
+      // 标题背景色
+      headerBg: "rgb(90, 90, 90)",
+      // 标题高度
+      headerHeight: 35,
+      // 标题是否展示序号
+      headerIndex: false,
+      headerIndexContent: "#",
+      headerIndexStyle: {},
+    };
+    const actualConfig = ref({});
     const uuid = `base-scroll-list-${generateUUID()}`;
     const { width, height } = useScreen(uuid);
+    const headerData = ref([]);
+    const headerStyle = ref([]);
 
-    const handleHeader = () => {
-        const headerData = cloneDeep(props.header)
-      if (headerData.length === 0) {
+    const handleHeader = (config) => {
+      const _headerData = cloneDeep(config.headerData);
+      const _headerStyle = cloneDeep(config.headerStyle);
+      if (_headerData.length === 0) {
         return;
       }
-      if (props.headerIndex) {
-
+      if (config.headerIndex) {
+        _headerData.unshift(config.headerIndexContent);
+        _headerStyle.unshift(config.headerIndexStyle);
       }
+      headerData.value = _headerData;
+      headerStyle.value = _headerStyle;
     };
 
-    onMounted(() => {});
+    onMounted(() => {
+      const _actualConfig = assign(defaultConfig, props.config);
+      console.log(_actualConfig)
+      handleHeader(_actualConfig);
+      actualConfig.value = _actualConfig;
+    });
     return {
       uuid,
+      headerData,
+      headerStyle,
+      actualConfig
     };
   },
 };

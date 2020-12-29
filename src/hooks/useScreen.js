@@ -9,7 +9,6 @@ export default function useScreen(idClassName) {
         dom = document.getElementById(idClassName)
         width.value = dom.clientWidth;
         height.value = dom.clientHeight;
-        console.log(dom)
     })
 
     return {
