@@ -11,7 +11,10 @@
         class="header-item base-scroll-list-text"
         v-for="(headerItem, i) in headerData"
         :key="i"
-        :style="headerStyle[i]"
+        :style="{
+          width: `${columnWidth[i]}px`,
+          ...headerStyle[i],
+        }"
         v-html="headerItem"
       ></div>
     </div>
@@ -47,13 +50,16 @@ export default {
       // 标题是否展示序号
       headerIndex: false,
       headerIndexContent: "#",
-      headerIndexStyle: {},
+      headerIndexStyle: {
+        width: "50px",
+      },
     };
     const actualConfig = ref({});
     const uuid = `base-scroll-list-${generateUUID()}`;
     const { width, height } = useScreen(uuid);
     const headerData = ref([]);
     const headerStyle = ref([]);
+    const columnWidth = ref([]);
 
     const handleHeader = (config) => {
       const _headerData = cloneDeep(config.headerData);
@@ -65,13 +71,29 @@ export default {
         _headerData.unshift(config.headerIndexContent);
         _headerStyle.unshift(config.headerIndexStyle);
       }
+      // 动态计算header宽度
+      let useWidth = 0;
+      let usedColumnNum = 0;
+      // 判断自定义width
+      _headerStyle.forEach((style) => {
+        if (style.width) {
+          useWidth += style.width.replace("px", "");
+          usedColumnNum++;
+        }
+      });
+      const avgWidth =
+        (width.value - useWidth) / (_headerData.length - usedColumnNum);
+      const _columnWidth = new Array(_headerData.length).fill(avgWidth);
+      columnWidth.value = _columnWidth;
+      console.log(columnWidth);
+
       headerData.value = _headerData;
       headerStyle.value = _headerStyle;
     };
 
     onMounted(() => {
       const _actualConfig = assign(defaultConfig, props.config);
-      console.log(_actualConfig)
+      console.log(_actualConfig);
       handleHeader(_actualConfig);
       actualConfig.value = _actualConfig;
     });
@@ -79,7 +101,8 @@ export default {
       uuid,
       headerData,
       headerStyle,
-      actualConfig
+      actualConfig,
+      columnWidth,
     };
   },
 };
