@@ -18,7 +18,21 @@
         v-html="headerItem"
       ></div>
     </div>
-    <div class="base-scroll-list-rows"></div>
+    <div
+      class="base-scroll-list-rows"
+      v-for="(rowData, rowIndex) in rowsData"
+      :key="rowIndex"
+    >
+      <div
+        class="base-scroll-list-columns"
+        v-for="(colData, colIndex) in rowData"
+        :key="colIndex"
+        :style="{
+          width: `${columnWidth[colIndex]}px`,
+        }"
+        v-html="colData"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -53,6 +67,8 @@ export default {
       headerIndexStyle: {
         width: "50px",
       },
+      // 数据 二维数组
+      data: [],
     };
     const actualConfig = ref({});
     const uuid = `base-scroll-list-${generateUUID()}`;
@@ -60,16 +76,21 @@ export default {
     const headerData = ref([]);
     const headerStyle = ref([]);
     const columnWidth = ref([]);
+    const rowsData = ref([]);
 
     const handleHeader = (config) => {
       const _headerData = cloneDeep(config.headerData);
       const _headerStyle = cloneDeep(config.headerStyle);
+      const _rowData = cloneDeep(config.data);
       if (_headerData.length === 0) {
         return;
       }
       if (config.headerIndex) {
         _headerData.unshift(config.headerIndexContent);
         _headerStyle.unshift(config.headerIndexStyle);
+        _rowData.forEach((rows, index) => {
+          rows.unshift(`${index + 1}`);
+        });
       }
       // 动态计算header宽度
       let useWidth = 0;
@@ -84,17 +105,27 @@ export default {
       const avgWidth =
         (width.value - useWidth) / (_headerData.length - usedColumnNum);
       const _columnWidth = new Array(_headerData.length).fill(avgWidth);
+      // 判断自定义width
+      _headerStyle.forEach((style, index) => {
+        if (style.width) {
+          const headerWidth = +style.width.replace("px", "");
+          _columnWidth[index] = headerWidth;
+        }
+      });
       columnWidth.value = _columnWidth;
-      console.log(columnWidth);
 
       headerData.value = _headerData;
       headerStyle.value = _headerStyle;
+      rowsData.value = _rowData;
     };
+
+    const handleRows = (config) => {};
 
     onMounted(() => {
       const _actualConfig = assign(defaultConfig, props.config);
-      console.log(_actualConfig);
+      rowsData.value = _actualConfig.data || [];
       handleHeader(_actualConfig);
+      handleRows(_actualConfig);
       actualConfig.value = _actualConfig;
     });
     return {
@@ -103,6 +134,7 @@ export default {
       headerStyle,
       actualConfig,
       columnWidth,
+      rowsData,
     };
   },
 };
@@ -124,6 +156,13 @@ export default {
     font-size: 15px;
     align-items: center;
     .header-item {
+    }
+  }
+  .base-scroll-list-rows {
+    display: flex;
+    .base-scroll-list-columns {
+      display: flex;
+      font-size: 28px;
     }
   }
 }
