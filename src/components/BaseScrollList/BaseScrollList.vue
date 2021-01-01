@@ -5,6 +5,8 @@
       :style="{
         backgroundColor: actualConfig.headerBg,
         height: `${actualConfig.headerHeight}px`,
+        fontSize: `${actualConfig.headerFontSize}px`,
+        color: `${actualConfig.headerColor}`,
       }"
     >
       <div
@@ -16,6 +18,7 @@
           ...headerStyle[i],
         }"
         v-html="headerItem"
+        :align="aligns[i]"
       ></div>
     </div>
     <div
@@ -24,6 +27,9 @@
       :key="rowIndex"
       :style="{
         height: `${rowHeights[rowIndex]}px`,
+        backgroundColor: rowIndex % 2 == 0 ? rowBg[1] : rowBg[0],
+        fontSize: `${actualConfig.rowFontSize}px`,
+        color: `${actualConfig.rowColor}`,
       }"
     >
       <div
@@ -32,8 +38,10 @@
         :key="colIndex"
         :style="{
           width: `${columnWidth[colIndex]}px`,
+          ...rowStyle[colIndex],
         }"
         v-html="colData"
+        :align="aligns[colIndex]"
       ></div>
     </div>
   </div>
@@ -60,19 +68,36 @@ export default {
       headerData: [],
       // 标题样式  [{}, {}, {}]
       headerStyle: [],
+      // 行样式
+      rowStyle: [],
       // 标题背景色
       headerBg: "rgb(90, 90, 90)",
       // 标题高度
       headerHeight: 35,
       // 标题是否展示序号
       headerIndex: false,
+      // 序号列标内容
       headerIndexContent: "#",
+      // 序号列标题样式
       headerIndexStyle: {
         width: "50px",
       },
+      // 序列号内容样式
+      rowIndexStyle: {
+        width: "50px",
+      },
+      // 行背景
+      rowBg: [],
       // 数据 二维数组
       data: [],
-      rowNum: 0,
+      // 每页显示数据量
+      rowNum: 10,
+      // 居中方式
+      aligns: [],
+      headerFontSize: 28,
+      rowFontSize: 28,
+      headerColor: "#fff",
+      rowColor: "#000",
     };
     const actualConfig = ref({});
     const uuid = `base-scroll-list-${generateUUID()}`;
@@ -83,20 +108,27 @@ export default {
     const rowsData = ref([]);
     const rowHeights = ref([]);
     const rowNum = ref(0);
+    const rowStyle = ref([]);
+    const rowBg = ref([]);
+    const aligns = ref([]);
 
     const handleHeader = (config) => {
       const _headerData = cloneDeep(config.headerData);
       const _headerStyle = cloneDeep(config.headerStyle);
+      const _rowStyle = cloneDeep(config.rowStyle);
       const _rowData = cloneDeep(config.data);
+      const _aligns = cloneDeep(config.aligns);
       if (_headerData.length === 0) {
         return;
       }
       if (config.headerIndex) {
         _headerData.unshift(config.headerIndexContent);
         _headerStyle.unshift(config.headerIndexStyle);
+        _rowStyle.unshift(config.rowIndexStyle);
         _rowData.forEach((rows, index) => {
           rows.unshift(`${index + 1}`);
         });
+        _aligns.unshift("center");
       }
       // 动态计算header宽度
       let useWidth = 0;
@@ -123,6 +155,8 @@ export default {
       headerData.value = _headerData;
       headerStyle.value = _headerStyle;
       rowsData.value = _rowData;
+      rowStyle.value = _rowStyle;
+      aligns.value = _aligns;
     };
 
     const handleRows = (config) => {
@@ -134,10 +168,13 @@ export default {
       if (rowNum.value > rowsData.value.length) {
         rowNum.value = rowsData.value.length;
       }
-      console.log(rowNum.value)
+      console.log(rowNum.value);
       const avgHeight = unuseHeight / rowNum.value;
       rowHeights.value = new Array(rowNum.value).fill(avgHeight);
-      console.log(rowHeights)
+      // 获取行背景色
+      if (config.rowBg) {
+        rowBg.value = config.rowBg;
+      }
     };
 
     onMounted(() => {
@@ -155,6 +192,9 @@ export default {
       columnWidth,
       rowsData,
       rowHeights,
+      rowStyle,
+      rowBg,
+      aligns,
     };
   },
 };
