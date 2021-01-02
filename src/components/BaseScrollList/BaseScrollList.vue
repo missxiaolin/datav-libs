@@ -22,27 +22,32 @@
       ></div>
     </div>
     <div
-      class="base-scroll-list-rows"
-      v-for="(rowData, rowIndex) in rowsData"
-      :key="rowIndex"
-      :style="{
-        height: `${rowHeights[rowIndex]}px`,
-        backgroundColor: rowIndex % 2 == 0 ? rowBg[1] : rowBg[0],
-        fontSize: `${actualConfig.rowFontSize}px`,
-        color: `${actualConfig.rowColor}`,
-      }"
+      class="base-scroll-list-row-wrapper"
+      :style="{ height: `${height - actualConfig.headerHeight}px` }"
     >
       <div
-        class="base-scroll-list-columns"
-        v-for="(colData, colIndex) in rowData"
-        :key="colIndex"
+        class="base-scroll-list-rows"
+        v-for="(rowData, rowIndex) in currentRowsData"
+        :key="rowIndex"
         :style="{
-          width: `${columnWidth[colIndex]}px`,
-          ...rowStyle[colIndex],
+          height: `${rowHeights[rowIndex]}px`,
+          backgroundColor: rowIndex % 2 == 0 ? rowBg[1] : rowBg[0],
+          fontSize: `${actualConfig.rowFontSize}px`,
+          color: `${actualConfig.rowColor}`,
         }"
-        v-html="colData"
-        :align="aligns[colIndex]"
-      ></div>
+      >
+        <div
+          class="base-scroll-list-columns"
+          v-for="(colData, colIndex) in rowData"
+          :key="colIndex"
+          :style="{
+            width: `${columnWidth[colIndex]}px`,
+            ...rowStyle[colIndex],
+          }"
+          v-html="colData"
+          :align="aligns[colIndex]"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
@@ -98,6 +103,8 @@ export default {
       rowFontSize: 28,
       headerColor: "#fff",
       rowColor: "#000",
+      moveNum: 1, // 移动位置
+      duration: 2000, // 动画间隔时间
     };
     const actualConfig = ref({});
     const uuid = `base-scroll-list-${generateUUID()}`;
@@ -106,6 +113,8 @@ export default {
     const headerStyle = ref([]);
     const columnWidth = ref([]);
     const rowsData = ref([]);
+    const currentRowsData = ref([]); // 动画当前元素
+    const currentIndex = ref(0); // 动画指针
     const rowHeights = ref([]);
     const rowNum = ref(0);
     const rowStyle = ref([]);
@@ -177,12 +186,35 @@ export default {
       }
     };
 
+    const startAnimation = async () => {
+      const config = actualConfig.value;
+      const { data, rowNum, moveNum, duration } = config;
+      const totalLength = data.length;
+      if (totalLength < rowNum) return;
+      const index = currentIndex.value;
+      const _rowData = cloneDeep(rowsData.value);
+      // 将数据重新头尾连接
+      const rows = _rowData.slice(index);
+      rows.push(..._rowData.slice(0, index));
+      currentRowsData.value = rows;
+      currentIndex.value += moveNum;
+      // 是否到达最后一组数据
+      const isLast = currentIndex.value - totalLength;
+      if (isLast >= 0) {
+        currentIndex.value = isLast;
+      }
+      // sleep
+      await new Promise((resolve) => setTimeout(resolve, duration));
+      await startAnimation();
+    };
+
     onMounted(() => {
       const _actualConfig = assign(defaultConfig, props.config);
       rowsData.value = _actualConfig.data || [];
       handleHeader(_actualConfig);
       handleRows(_actualConfig);
       actualConfig.value = _actualConfig;
+      startAnimation();
     });
     return {
       uuid,
@@ -191,10 +223,12 @@ export default {
       actualConfig,
       columnWidth,
       rowsData,
+      currentRowsData,
       rowHeights,
       rowStyle,
       rowBg,
       aligns,
+      height,
     };
   },
 };
@@ -218,11 +252,14 @@ export default {
     .header-item {
     }
   }
-  .base-scroll-list-rows {
-    display: flex;
-    align-items: center;
-    .base-scroll-list-columns {
-      font-size: 28px;
+  .base-scroll-list-row-wrapper {
+    overflow: hidden;
+    .base-scroll-list-rows {
+      display: flex;
+      align-items: center;
+      .base-scroll-list-columns {
+        font-size: 28px;
+      }
     }
   }
 }
