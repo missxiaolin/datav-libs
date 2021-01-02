@@ -28,7 +28,7 @@
       <div
         class="base-scroll-list-rows"
         v-for="(rowData, index) in currentRowsData"
-        :key="index"
+        :key="rowData.rowIndex"
         :style="{
           height: `${rowHeights[index]}px`,
           lineHeight: `${rowHeights[index]}px`,
@@ -38,7 +38,7 @@
         }"
       >
         <div
-          class="base-scroll-list-columns"
+          class="base-scroll-list-columns base-scroll-list-text"
           v-for="(colData, colIndex) in rowData.data"
           :key="colIndex"
           :style="{
@@ -105,7 +105,7 @@ export default {
       headerColor: "#fff",
       rowColor: "#000",
       moveNum: 1, // 移动位置
-      duration: 10000, // 动画间隔时间
+      duration: 2000, // 动画间隔时间
     };
     const actualConfig = ref({});
     const uuid = `base-scroll-list-${generateUUID()}`;
@@ -165,10 +165,21 @@ export default {
 
       headerData.value = _headerData;
       headerStyle.value = _headerStyle;
-      rowsData.value = _rowData.map((item, index) => ({
-        data: item,
-        rowIndex: index,
-      }));
+      const { rowNum } = config
+      if (_rowData.length >= rowNum && _rowData.length < rowNum * 2) {
+        const newRowData = [..._rowData, ..._rowData]
+        rowsData.value = newRowData.map((item, index) => ({
+          data: item,
+          rowIndex: index,
+        }));
+      } else {
+        rowsData.value = _rowData.map((item, index) => ({
+          data: item,
+          rowIndex: index,
+        }));
+      }
+      console.log(rowsData.value)
+      
       rowStyle.value = _rowStyle;
       aligns.value = _aligns;
     };
@@ -182,7 +193,6 @@ export default {
       if (rowNum.value > rowsData.value.length) {
         rowNum.value = rowsData.value.length;
       }
-      console.log(rowNum.value);
       avgHeight = unuseHeight / rowNum.value;
       rowHeights.value = new Array(rowNum.value).fill(avgHeight);
       // 获取行背景色
@@ -205,8 +215,8 @@ export default {
       // 先将所有行高度还原
       rowHeights.value = new Array(totalLength).fill(avgHeight);
       // 然后将moveNum的行高度设置为0
-      const waitTime = 5000;
-      await new Promise((resolve) => setTimeout(resolve, waitTime));
+      const waitTime = 300;
+      await new Promise(resolve => setTimeout(resolve, waitTime));
       rowHeights.value.splice(0, moveNum, ...new Array(moveNum).fill(0));
 
       currentIndex.value += moveNum;
@@ -216,7 +226,7 @@ export default {
         currentIndex.value = isLast;
       }
       // sleep
-      await new Promise((resolve) => setTimeout(resolve, duration - waitTime));
+      await new Promise(resolve => setTimeout(resolve, duration - waitTime));
       await startAnimation();
     };
 
@@ -226,6 +236,7 @@ export default {
       handleHeader(_actualConfig);
       handleRows(_actualConfig);
       actualConfig.value = _actualConfig;
+      // 展示动画
       startAnimation();
     });
     return {
@@ -261,8 +272,6 @@ export default {
     display: flex;
     font-size: 15px;
     align-items: center;
-    .header-item {
-    }
   }
   .base-scroll-list-row-wrapper {
     overflow: hidden;
@@ -271,7 +280,7 @@ export default {
       align-items: center;
       transition: all 0.3s linear;
       .base-scroll-list-columns {
-        font-size: 28px;
+        height: 100%;
       }
     }
   }
