@@ -178,7 +178,6 @@ export default {
           rowIndex: index,
         }));
       }
-      console.log(rowsData.value)
       
       rowStyle.value = _rowStyle;
       aligns.value = _aligns;
@@ -204,7 +203,7 @@ export default {
     const startAnimation = async () => {
       const config = actualConfig.value;
       const { data, rowNum, moveNum, duration } = config;
-      const totalLength = data.length;
+      const totalLength = rowsData.value.length;
       if (totalLength < rowNum) return;
       const index = currentIndex.value;
       const _rowData = cloneDeep(rowsData.value);
