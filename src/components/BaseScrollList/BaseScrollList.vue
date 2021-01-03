@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { generateUUID } from "../../utils/index";
 import useScreen from "../../hooks/useScreen";
 import cloneDeep from "lodash/cloneDeep";
@@ -121,6 +121,7 @@ export default {
     const rowStyle = ref([]);
     const rowBg = ref([]);
     const aligns = ref([]);
+    const isAnimateStart = ref(true);
     let avgHeight; // 行高
 
     const handleHeader = (config) => {
@@ -201,6 +202,8 @@ export default {
     };
 
     const startAnimation = async () => {
+      if (!isAnimateStart) return
+
       const config = actualConfig.value;
       const { data, rowNum, moveNum, duration } = config;
       const totalLength = rowsData.value.length;
@@ -229,15 +232,30 @@ export default {
       await startAnimation();
     };
 
-    onMounted(() => {
+    const stopAnimation = () => {
+      isAnimateStart.value = false
+    }
+
+    const update = () => {
+      stopAnimation()
       const _actualConfig = assign(defaultConfig, props.config);
       rowsData.value = _actualConfig.data || [];
       handleHeader(_actualConfig);
       handleRows(_actualConfig);
       actualConfig.value = _actualConfig;
       // 展示动画
+      isAnimateStart.value = true
       startAnimation();
+    }
+
+    onMounted(() => {
+      update()
     });
+
+    watch(() => props.config, () => {
+      update()
+    })
+
     return {
       uuid,
       headerData,
