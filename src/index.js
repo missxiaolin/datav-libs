@@ -18,6 +18,8 @@ import CenterHeader from './components/CenterHeader/index'
 import TransformCategory from './components/TransformCategory/index'
 import BaseScrollList from './components/BaseScrollList/index'
 import JsMapWarning from './components/JsMapWarning/index'
+import RotaingEarth from './components/RotaingEarth/index'
+
 
 
 export default function(Vue) {
@@ -41,4 +43,5 @@ export default function(Vue) {
     Vue.use(TransformCategory)
     Vue.use(BaseScrollList)
     Vue.use(JsMapWarning)
+    Vue.use(RotaingEarth)
 }
