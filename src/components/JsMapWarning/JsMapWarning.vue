@@ -27,10 +27,12 @@ export default {
           '泰州市': [119.915176, 32.484882],
           '宿迁市': [118.275162, 33.963008]
         }
-        echarts.registerMap('jiangsu', mokeData)
+        echarts.registerMap('jiangsu', mokeData) // 注册地图
         options.value = {
             geo: [{
-                map: 'jiangsu'
+                map: 'jiangsu', // 使用自定义地图
+                zoom: 1, // 默认显示比例
+                roam: true, // 启动鼠标地图缩放
             }]
         }
     }
