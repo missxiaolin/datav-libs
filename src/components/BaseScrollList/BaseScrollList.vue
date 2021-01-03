@@ -88,6 +88,7 @@ export default {
       headerIndexStyle: {
         width: "50px",
       },
+      headerIndexData: [], // 序号列数据内容
       // 序列号内容样式
       rowIndexStyle: {
         width: "50px",
@@ -138,7 +139,11 @@ export default {
         _headerStyle.unshift(config.headerIndexStyle);
         _rowStyle.unshift(config.rowIndexStyle);
         _rowData.forEach((rows, index) => {
-          rows.unshift(`${index + 1}`);
+          if (!!config.headerIndexData && config.headerIndexData.length > 0 && config.headerIndexData[index]) {
+            rows.unshift(config.headerIndexData[index]);
+          } else {
+            rows.unshift(`${index + 1}`);
+          }
         });
         _aligns.unshift("center");
       }
