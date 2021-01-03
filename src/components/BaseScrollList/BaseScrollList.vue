@@ -286,7 +286,6 @@ export default {
   width: 100%;
   height: 100%;
   .base-scroll-list-text {
-    padding: 0 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
