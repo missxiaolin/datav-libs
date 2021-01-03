@@ -218,6 +218,7 @@ export default {
       rowHeights.value = new Array(totalLength).fill(avgHeight);
       // 然后将moveNum的行高度设置为0
       const waitTime = 300;
+      if (!isAnimateStart) return
       await new Promise(resolve => setTimeout(resolve, waitTime));
       rowHeights.value.splice(0, moveNum, ...new Array(moveNum).fill(0));
 
@@ -227,6 +228,7 @@ export default {
       if (isLast >= 0) {
         currentIndex.value = isLast;
       }
+      if (!isAnimateStart) return
       // sleep
       await new Promise(resolve => setTimeout(resolve, duration - waitTime));
       await startAnimation();
