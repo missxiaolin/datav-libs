@@ -54,6 +54,7 @@
   "dependencies": {
     "crypto": "^1.0.1",
     "echarts": "^5.0.0",
+    "echarts-gl": "^1.1.2",
     "lodash": "^4.17.20",
     "uuid": "^8.3.1",
     "vue-count-to": "^1.0.13"
