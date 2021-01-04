@@ -17,6 +17,8 @@ import HotCategory from './components/HotCategory/index'
 import CenterHeader from './components/CenterHeader/index'
 import TransformCategory from './components/TransformCategory/index'
 import BaseScrollList from './components/BaseScrollList/index'
+import OrderMap from './components/OrderMap/index'
+
 
 
 
@@ -40,4 +42,5 @@ export default function(Vue) {
     Vue.use(CenterHeader)
     Vue.use(TransformCategory)
     Vue.use(BaseScrollList)
+    Vue.use(OrderMap)
 }
