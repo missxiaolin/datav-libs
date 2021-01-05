@@ -18,8 +18,7 @@ import CenterHeader from './components/CenterHeader/index'
 import TransformCategory from './components/TransformCategory/index'
 import BaseScrollList from './components/BaseScrollList/index'
 import OrderMap from './components/OrderMap/index'
-
-
+import RealTimeOrder from './components/RealTimeOrder/index'
 
 
 export default function(Vue) {
@@ -43,4 +42,5 @@ export default function(Vue) {
     Vue.use(TransformCategory)
     Vue.use(BaseScrollList)
     Vue.use(OrderMap)
+    Vue.use(RealTimeOrder)
 }
