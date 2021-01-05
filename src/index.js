@@ -19,6 +19,8 @@ import TransformCategory from './components/TransformCategory/index'
 import BaseScrollList from './components/BaseScrollList/index'
 import OrderMap from './components/OrderMap/index'
 import RealTimeOrder from './components/RealTimeOrder/index'
+import ScheduleView from './components/ScheduleView/index'
+
 
 
 export default function(Vue) {
@@ -43,4 +45,5 @@ export default function(Vue) {
     Vue.use(BaseScrollList)
     Vue.use(OrderMap)
     Vue.use(RealTimeOrder)
+    Vue.use(ScheduleView)
 }
