@@ -20,6 +20,8 @@ import BaseScrollList from './components/BaseScrollList/index'
 import OrderMap from './components/OrderMap/index'
 import RealTimeOrder from './components/RealTimeOrder/index'
 import ScheduleView from './components/ScheduleView/index'
+import SalesRank from './components/SalesRank/index'
+
 
 
 
@@ -46,4 +48,5 @@ export default function(Vue) {
     Vue.use(OrderMap)
     Vue.use(RealTimeOrder)
     Vue.use(ScheduleView)
+    Vue.use(SalesRank)
 }
